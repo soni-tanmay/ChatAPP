@@ -65,8 +65,8 @@ export class ChannelService {
           messages: {
             _count: 'desc',
           },
-        }
-      });
+        },
+      })
 
       return { message: 'success', data: channels }
     } catch (err) {
@@ -75,15 +75,15 @@ export class ChannelService {
   }
 
   async searchChannels(query: SearchChannelDTO) {
-    console.log(query.name);
+    console.log(query.name)
     try {
       let channels = await this.prisma.channels.findMany({
         where: {
           name: {
             contains: query.name,
-          }
-        }
-      });
+          },
+        },
+      })
 
       return { message: 'success', data: channels }
     } catch (err) {
@@ -91,4 +91,7 @@ export class ChannelService {
     }
   }
 
+  async joinChannel(userId: string, channelId: string) {
+    // TODO (manuinder):
+  }
 }
