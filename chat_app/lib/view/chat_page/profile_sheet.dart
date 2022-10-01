@@ -132,19 +132,22 @@ class _AvatarListState extends State<AvatarList> {
         builder: (context, state) {
           if (state is AvatarSuccess) {
             return Wrap(
+              spacing: 20,
+              runSpacing: 20,
+              alignment: WrapAlignment.center,
               children: List.generate(
                 state.avatars.length,
                 (index) => InkWell(
+                  onTap: (){},
                   child: CircleAvatar(
                     backgroundColor: AppTheme.lightTheme.colorScheme.primary,
                     backgroundImage: NetworkImage(state.avatars[index]),
+                    radius: 40,
                   ),
                 ),
               ),
             );
-          }
-
-          if (state is AvatarLoading || state is AvatarInitial) {
+          } else if (state is AvatarLoading || state is AvatarInitial) {
             return const CircularProgressIndicator(
               valueColor: AlwaysStoppedAnimation(AppTheme.extraLightPurple),
             );

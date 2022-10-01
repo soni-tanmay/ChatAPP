@@ -9,7 +9,7 @@ class AvatarRepo {
 
   Future<List<String>> fetchAvatars() async {
     final Response response = await dio.get('/users/avatars');
-    
-    return response.data;
+    print(response.data.runtimeType);
+    return List<String>.from(response.data);
   }
 }
