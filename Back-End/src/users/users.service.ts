@@ -77,16 +77,16 @@ export class UsersService {
     return this.prisma.users.findMany()
   }
 
-  findOne(id: string) {
-    return this.prisma.users.findUnique({ where: { id : id } })
+  findOne(id) {
+    return this.prisma.users.findUnique({ where: { id: id } })
   }
 
   findOneByEmail(email: string) {
-    return this.prisma.users.findUnique({ where: { email } })
+    return this.prisma.users.findUnique({ where: { email: email } })
   }
 
   findOneByUserName(userName: string) {
-    return this.prisma.users.findUnique({ where: { userName } })
+    return this.prisma.users.findUnique({ where: { userName: userName } })
   }
 
   updateOne(id: string, request: UpdateUserDto) {

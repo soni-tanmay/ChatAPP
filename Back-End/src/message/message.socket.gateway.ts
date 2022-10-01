@@ -11,11 +11,22 @@ export class MessageSocketGateway {
 
   handleConnection(@ConnectedSocket() socket: MySocket) {
     console.log(`[ ${socket.id} ] connected`)
-    socket.on('sendMessage', async (data: CreateMessageDto) => {
-      console.log('sendMessageData', data)
-      // const { password, ...user } = await this.usersService.findOne(data.senderId)
-      socket.emit(`${data.channelId}`, { message: data })
-      await this.messageService.create(data)
+    socket.on('sendMessage', async data => {
+      const jsonData = JSON.parse(data)
+      if (jsonData.message.trim() !== '') {
+        const { password, ...user } = await this.usersService.findOne(jsonData.senderId)
+        const socketPayload = {
+          user: user,
+          payload: {
+            dateTime: new Date().toLocaleString('en-US', {
+              timeZone: 'Asia/Kolkata',
+            }),
+            ...jsonData,
+          },
+        }
+        socket.emit(`${jsonData.channelId}`, socketPayload)
+        await this.messageService.create({ user: user, data: socketPayload })
+      }
     })
   }
   async handleDisconnect(@ConnectedSocket() socket: MySocket) {

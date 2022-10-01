@@ -7,20 +7,19 @@ import { GetMessageDto } from './dto/get-message.dto'
 export class MessageService {
   constructor(private prisma: PrismaService) {}
 
-  async create(request: CreateMessageDto) {
+  async create(request: CreateMessageDto | any) {
     const message = await this.prisma.messages.create({
       data: {
-        message: request.message,
-        image:
-          'https://w7.pngwing.com/pngs/595/79/png-transparent-dart-programming-language-flutter-object-oriented-programming-flutter-logo-class-fauna-bird.png',
+        message: request.data.payload.message,
+        image: request.user.profilePic,
         channel: {
           connect: {
-            id: request.channelId,
+            id: request.data.payload.channelId,
           },
         },
         user: {
           connect: {
-            id: request.senderId,
+            id: request.data.payload.senderId,
           },
         },
       },
