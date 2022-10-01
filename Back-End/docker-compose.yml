@@ -1,0 +1,37 @@
+version: '3.9'
+
+services:
+  chat-app-api:
+    build:
+      dockerfile: Dockerfile
+      context: .
+      target: development
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    env_file:
+      - .env
+    command: npm run start:debug
+    ports:
+      - ${PORT}:${PORT}
+      - 9229:9229 # Expose Vscode debug port
+    depends_on:
+      - database
+
+  # Database configuration
+  database:
+    image: postgres:14.4
+    restart: always
+    env_file:
+      - .env
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - ${DB_PORT}:${DB_PORT} # Expose port to host machine to connect to pgAdmin.
+    volumes:
+      - chat-app-database:/var/lib/postgresql/data
+
+volumes:
+  chat-app-database:
