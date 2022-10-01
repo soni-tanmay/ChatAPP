@@ -1,9 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { RegisterDto } from 'src/auth/dto'
 import { PrismaService } from 'src/prisma/prisma.service'
-import { CreateUserDto } from './dto/create-user.dto'
-import { UpdateUserDto } from './dto/update-user.dto'
-
 @Injectable()
 export class UsersService {
   constructor(private readonly prisma: PrismaService) {}
@@ -80,12 +77,13 @@ export class UsersService {
   }
 
   findOne(id: string) {
-    return this.prisma.users.findUnique({ where: { id } })
+    return this.prisma.users.findUnique({ where: { id : id } })
   }
 
   findOneByEmail(email: string) {
     return this.prisma.users.findUnique({ where: { email } })
   }
+
   findOneByUserName(userName: string) {
     return this.prisma.users.findUnique({ where: { userName } })
   }
