@@ -15,20 +15,20 @@ export class ChannelController {
     return this.channelService.create(createChannelDto, req.user.id)
   }
 
-  // @UseGuards(AuthGuard('jwt-strategy'))
+  @UseGuards(AuthGuard('jwt-strategy'))
   @Get()
   findAll(@Request() req) {
     console.log(req.user.id);
     return this.channelService.findAll(req.user.id)
   }
 
-  // @UseGuards(AuthGuard('jwt-strategy'))
+  @UseGuards(AuthGuard('jwt-strategy'))
   @Get('trending')
   findTrending() {
     return this.channelService.findTrending()
   }
 
-  // @UseGuards(AuthGuard('jwt-strategy'))
+  @UseGuards(AuthGuard('jwt-strategy'))
   @Get('search')
   search(@Query() query: SearchChannelDTO,) {
     return this.channelService.searchChannels(query)

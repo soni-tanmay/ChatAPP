@@ -30,7 +30,7 @@ export class ChannelService {
             {
               user: {
                 connect: {
-                  id: '04bfadda-2b37-4b40-ba1c-26bfbd181fc9',
+                  id: userId,
                 },
               },
             },
@@ -47,7 +47,7 @@ export class ChannelService {
         where: {
           users: {
             some: {
-              userId: '04bfadda-2b37-4b40-ba1c-26bfbd181fc9',
+              userId: userId,
             },
           },
         },
