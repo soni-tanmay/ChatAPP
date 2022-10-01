@@ -30,60 +30,64 @@ class _AuthenticationState extends State<Authentication> {
         child: ValueListenableBuilder(
           valueListenable: isSignUp,
           builder: (BuildContext context, bool value, Widget? child) {
-            return Stack(
-              children: <Widget>[
-                Image.asset(
-                  Assets.authBackgroundImage,
-                  fit: BoxFit.cover,
-                  height: double.maxFinite,
-                  width: double.maxFinite,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16.0,
-                    vertical: 20.0,
+            return SafeArea(
+              bottom: false,
+              child: Stack(
+                children: <Widget>[
+                  Image.asset(
+                    Assets.authBackgroundImage,
+                    fit: BoxFit.cover,
+                    height: double.maxFinite,
+                    width: double.maxFinite,
                   ),
-                  child: Row(
-                    children: [
-                      Lottie.asset(
-                        Assets.logo,
-                        height: 50,
-                        width: 50,
-                        fit: BoxFit.contain,
-                      ),
-                      const SizedBox(width: 4),
-                      const Text(
-                        'OMEGA',
-                        style: TextStyle(
-                          fontSize: 28,
-                          fontWeight: FontWeight.w900,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16.0,
+                      vertical: 20.0,
+                    ),
+                    child: Row(
+                      children: [
+                        Lottie.asset(
+                          Assets.logo,
+                          height: 50,
+                          width: 50,
+                          fit: BoxFit.contain,
                         ),
-                      ),
-                      const Spacer(),
-                      Text(
-                        value
-                            ? 'Already have an account'
-                            : "Don't have an accout ?",
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w600,
+                        const SizedBox(width: 4),
+                        const Text(
+                          'OMEGA',
+                          style: TextStyle(
+                            fontSize: 28,
+                            fontWeight: FontWeight.w900,
+                          ),
                         ),
-                      ),
-                      const SizedBox(width: 10),
-                      CustomButton(
-                        onTap: () {
-                          isSignUp.value = !value;
-                        },
-                        buttonText: value ? 'Log In' : 'Sign up',
-                        width: 90,
-                        height: 40,
-                      ),
-                    ],
+                        const Spacer(),
+                        if (MediaQuery.of(context).size.width > 1200)
+                          Text(
+                            value
+                                ? 'Already have an account'
+                                : "Don't have an accout ?",
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        const SizedBox(width: 10),
+                        CustomButton(
+                          onTap: () {
+                            isSignUp.value = !value;
+                          },
+                          buttonText: value ? 'Log In' : 'Sign up',
+                          width: 90,
+                          height: 40,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                Center(
-                  child: AuthenticationCard(isSignUp: value),
-                ),
-              ],
+                  Center(
+                    child: AuthenticationCard(isSignUp: value),
+                  ),
+                ],
+              ),
             );
           },
         ),
