@@ -15,10 +15,6 @@ class AppTheme {
 
   static const Color extraLightPurple = Color.fromARGB(255, 236, 234, 250);
   static const Color grey = Colors.grey;
-  static Color lightGrey = Colors.grey.shade100;
-
-  static const Color extraLightPurple = Color.fromARGB(255, 236, 234, 250);
-  static const Color grey = Colors.grey;
   static Color lightGrey = Colors.grey.shade400;
   static const Color black = Colors.black;
   static const Color red = Colors.red;
