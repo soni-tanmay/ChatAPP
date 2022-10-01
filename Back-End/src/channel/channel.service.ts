@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from 'src/prisma/prisma.service'
 import { CreateChannelDto } from './dto/create-channel.dto'
-import { UpdateChannelDto } from './dto/update-channel.dto'
+import { SearchChannelDTO } from './dto/search-channel.dto'
 
 @Injectable()
 export class ChannelService {
@@ -74,11 +74,21 @@ export class ChannelService {
     }
   }
 
-  update(id: number, updateChannelDto: UpdateChannelDto) {
-    return `This action updates a #${id} channel`
+  async searchChannels(query: SearchChannelDTO) {
+    console.log(query.name);
+    try {
+      let channels = await this.prisma.channels.findMany({
+        where: {
+          name: {
+            contains: query.name,
+          }
+        }
+      });
+
+      return { message: 'success', data: channels }
+    } catch (err) {
+      return { message: 'error', data: err }
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} channel`
-  }
 }

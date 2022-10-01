@@ -1,7 +1,8 @@
-import { Body, Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query, Request, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ChannelService } from './channel.service';
 import { CreateChannelDto } from './dto/create-channel.dto';
+import { SearchChannelDTO } from './dto/search-channel.dto';
 
 @Controller('channels')
 export class ChannelController {
@@ -29,7 +30,7 @@ export class ChannelController {
 
   // @UseGuards(AuthGuard('jwt-strategy'))
   @Get('search')
-  search() {
-    return this.channelService.findTrending()
+  search(@Query() query: SearchChannelDTO,) {
+    return this.channelService.searchChannels(query)
   }
 }
