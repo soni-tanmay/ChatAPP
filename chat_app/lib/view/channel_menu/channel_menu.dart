@@ -24,16 +24,16 @@ class ChannelMenu extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
-          children: const [
+          children: [
             SearchBar(),
-            SizedBox(
+            const SizedBox(
               height: 24,
             ),
-            TrendingChannel(),
-            SizedBox(
+            const TrendingChannel(),
+            const SizedBox(
               height: 24,
             ),
-            MyChannels(),
+            const MyChannels(),
           ],
         ),
       ),
