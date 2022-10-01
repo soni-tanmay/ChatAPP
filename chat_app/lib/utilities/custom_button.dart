@@ -7,17 +7,19 @@ class CustomButton extends StatelessWidget {
     required this.buttonText,
     this.height,
     this.width,
+    this.isLoading = false,
   }) : super(key: key);
 
   final VoidCallback onTap;
   final String buttonText;
   final double? height;
   final double? width;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onTap,
+      onTap: isLoading ? null : onTap,
       child: Container(
         height: height ?? 45,
         width: width,
@@ -42,13 +44,17 @@ class CustomButton extends StatelessWidget {
             ),
           ],
         ),
-        child: Text(
-          buttonText,
-          style: TextStyle(
-            color: Theme.of(context).colorScheme.primary,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+        child: isLoading
+            ? const CircularProgressIndicator(
+                strokeWidth: 2,
+              )
+            : Text(
+                buttonText,
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.primary,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
       ),
     );
   }

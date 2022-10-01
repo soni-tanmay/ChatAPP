@@ -23,7 +23,6 @@ class _AuthenticationCardState extends State<AuthenticationCard> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -78,6 +77,7 @@ class _AuthenticationCardState extends State<AuthenticationCard> {
                 labelText: 'Username',
                 prefixIcon: Icons.person_outline,
                 validator: (String? value) {
+                  if (!widget.isSignUp) return null;
                   if (value == null || value.isEmpty) {
                     return 'Username is required';
                   }
@@ -111,17 +111,41 @@ class _AuthenticationCardState extends State<AuthenticationCard> {
               },
             ),
             const SizedBox(height: 30),
-            CustomButton(
-              onTap: () {
-                if (formKey.currentState!.validate()) {}
+            BlocBuilder<AuthenticationBloc, AuthenticationState>(
+              builder: (context, state) {
+                return CustomButton(
+                  onTap: authenticate,
+                  isLoading: state is AuthenticationLoading,
+                  height: 45,
+                  width: double.maxFinite,
+                  buttonText: widget.isSignUp ? 'Sign Up' : 'Log In',
+                );
               },
-              height: 45,
-              width: double.maxFinite,
-              buttonText: widget.isSignUp ? 'Sign Up' : 'Log In',
             ),
           ],
         ),
       ),
     );
+  }
+
+  void authenticate() {
+    if (formKey.currentState!.validate()) {
+      if (widget.isSignUp) {
+        context.read<AuthenticationBloc>().add(
+              AuthenticationSignup(
+                email: emailController.text,
+                password: passwordController.text,
+                username: usernameController.text,
+              ),
+            );
+      } else {
+        context.read<AuthenticationBloc>().add(
+              AuthenticationLogin(
+                email: emailController.text,
+                password: passwordController.text,
+              ),
+            );
+      }
+    }
   }
 }

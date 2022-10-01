@@ -7,6 +7,10 @@ class AppTheme {
       primary: Color(0xFFFFFFFF),
       secondary: Color(0xFF7B68EE),
     ),
+    textSelectionTheme: const TextSelectionThemeData(
+      cursorColor: Colors.black,
+      selectionColor: Color.fromARGB(255, 236, 234, 250),
+    ),
   );
 
   static const Color extraLightPurple = Color.fromARGB(255, 236, 234, 250);
