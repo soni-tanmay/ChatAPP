@@ -3,14 +3,14 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 import '../../utilities/export.dart';
 
 class SocketService {
-  const SocketService._();
-  static const SocketService _instance = SocketService._();
-  factory() => _instance;
+   SocketService._();
+  static  SocketService instance = SocketService._();
+  factory() => instance;
 
-  static late IO.Socket socket;
-  void connnect() {
+   late IO.Socket socket;
+  void connect() {
     socket = IO.io(
-      '',
+      'http://localhost:3000/',
       IO.OptionBuilder()
           .setTransports(<String>['websocket'])
           .setQuery(<String, dynamic>{'token': ''})
@@ -19,7 +19,12 @@ class SocketService {
     );
 
     socket.connect();
-    socket.onConnect((_) => Console.log('Socket Connected on URL : '));
+    socket.onConnect((_) {
+      Console.log('Socket Connected on URL : http://localhost:3000/');
+      socket.on('c05bc5bd-598e-4230-85c3-36b49cc3e1ef', (data) {
+        Console.log(data);
+      });
+    });
   }
 
   void disconnect() => socket.disconnect();

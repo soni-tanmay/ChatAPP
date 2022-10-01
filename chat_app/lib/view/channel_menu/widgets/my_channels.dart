@@ -1,4 +1,5 @@
 import 'package:chat_app/logic/channel_bloc/channel_bloc.dart';
+import 'package:chat_app/services/socket/socket_service.dart';
 import 'package:chat_app/utilities/export.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -48,7 +49,9 @@ class _MyChannelsState extends State<MyChannels> {
                   ),
                   dense: true,
                   minLeadingWidth: 0,
-                  onTap: () {},
+                  onTap: () {
+                    SocketService.instance.connect();
+                  },
                   hoverColor: AppTheme.extraLightPurple,
                   visualDensity:
                       const VisualDensity(horizontal: -4, vertical: -4),

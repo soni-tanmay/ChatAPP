@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:chat_app/logic/authentication_bloc/authentication_bloc.dart';
 import 'package:chat_app/services/authentication/authentication_repo.dart';
+import 'package:chat_app/services/socket/socket_service.dart';
 import 'package:chat_app/utilities/export.dart';
 import 'package:chat_app/view/channel_menu/channel_menu.dart';
 import 'package:chat_app/view/chat_page/profile_sheet.dart';
@@ -121,7 +122,16 @@ class _ChatPageState extends State<ChatPage> {
               Icons.send,
               color: AppTheme.grey,
             ),
-            onPressed: () {},
+            onPressed: () {
+              SocketService.instance.socket.emit(
+                'sendMessage',
+                {
+                  "message": "Hey This is general channel",
+                  "senderId": "04bfadda-2b37-4b40-ba1c-26bfbd181fc9",
+                  "channelId": "c05bc5bd-598e-4230-85c3-36b49cc3e1ef"
+                },
+              );
+            },
           ),
           suffixIconColor: AppTheme.grey,
         ),

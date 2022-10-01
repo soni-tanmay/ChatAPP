@@ -12,6 +12,7 @@ export class MessageSocketGateway {
   handleConnection(@ConnectedSocket() socket: MySocket) {
     console.log(`[ ${socket.id} ] connected`)
     socket.on('sendMessage', async data => {
+      console.log(data)
       const jsonData = JSON.parse(data)
       if (jsonData.message.trim() !== '') {
         const { password, ...user } = await this.usersService.findOne(jsonData.senderId)
