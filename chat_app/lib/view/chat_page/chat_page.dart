@@ -1,4 +1,5 @@
 import 'package:chat_app/utilities/export.dart';
+import 'package:chat_app/view/channel_menu/channel_menu.dart';
 import 'package:flutter/material.dart';
 
 class ChatPage extends StatelessWidget {
@@ -12,6 +13,11 @@ class ChatPage extends StatelessWidget {
         elevation: 0,
         title: const Text('Channel Name'),
       ),
+      drawer: (MediaQuery.of(context).size.width < 1200)
+          ? const Drawer(
+              child: ChannelMenu(),
+            )
+          : null,
       body: ListView.builder(
         itemCount: 20,
         reverse: true,

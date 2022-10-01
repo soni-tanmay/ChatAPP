@@ -26,7 +26,11 @@ class _AuthenticationCardState extends State<AuthenticationCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width * 0.28,
+      margin: EdgeInsets.symmetric(
+        horizontal: MediaQuery.of(context).size.width > 1200
+            ? MediaQuery.of(context).size.width * 0.3
+            : MediaQuery.of(context).size.width * 0.1,
+      ),
       padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 40),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
