@@ -7,10 +7,16 @@ class Navigation extends NavigatorObserver {
   static List<Route<dynamic>> routeStack = <Route<dynamic>>[];
 
   static const String initalPage = '/';
+  static const String homepage = '/homepage';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case initalPage:
+        return _GenerateRoute(
+          child: const Authentication(),
+          routeName: settings.name!,
+        );
+      case homepage:
         return _GenerateRoute(
           child: const HomePage(),
           routeName: settings.name!,
