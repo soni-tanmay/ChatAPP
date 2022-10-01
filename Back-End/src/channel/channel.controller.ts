@@ -1,8 +1,10 @@
 import { Body, Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiTags } from '@nestjs/swagger';
 import { ChannelService } from './channel.service';
 import { CreateChannelDto } from './dto/create-channel.dto';
 
+@ApiTags('Channels')
 @Controller('channels')
 export class ChannelController {
   constructor(private readonly channelService: ChannelService) {}

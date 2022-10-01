@@ -29,6 +29,7 @@
     "@nestjs/jwt": "^9.0.0",
     "@nestjs/passport": "^9.0.0",
     "@nestjs/platform-express": "^9.0.0",
+    "@nicholas.braun/nestjs-redoc": "^2.2.3",
     "@nestjs/swagger": "^6.1.2",
     "@prisma/client": "^4.4.0",
     "bcrypt": "^5.0.1",
