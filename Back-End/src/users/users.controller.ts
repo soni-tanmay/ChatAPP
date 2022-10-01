@@ -12,10 +12,13 @@ import { AuthGuard } from '@nestjs/passport'
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+<<<<<<< HEAD
   // @Post()
   // create(@Body() registerDto: RegisterDto) {
   //   return this.usersService.create(registerDto);
   // }
+=======
+>>>>>>> fa089c8f20103ccc0be2a4d356cf0ec4359f446b
   @Post()
   create(@Body() registerDto: RegisterDto) {
     return this.usersService.create(registerDto)

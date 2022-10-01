@@ -11,6 +11,7 @@ export class MessageSocketGateway {
 
   handleConnection(@ConnectedSocket() socket: MySocket) {
     console.log(`[ ${socket.id} ] connected`)
+<<<<<<< HEAD
     socket.on('sendMessage', async data => {
       const jsonData = JSON.parse(data)
       if (jsonData.message.trim() !== '') {
@@ -27,6 +28,13 @@ export class MessageSocketGateway {
         socket.emit(`${jsonData.channelId}`, socketPayload)
         await this.messageService.create({ user: user, data: socketPayload })
       }
+=======
+    socket.on('sendMessage', async (data: CreateMessageDto) => {
+      console.log('sendMessageData', data)
+      const { password, ...user } = await this.usersService.findOne(data.senderId)
+      socket.emit(`${data.channelId}`, { message: data })
+      await this.messageService.create(data)
+>>>>>>> fa089c8f20103ccc0be2a4d356cf0ec4359f446b
     })
   }
   async handleDisconnect(@ConnectedSocket() socket: MySocket) {
