@@ -1,6 +1,7 @@
-import 'package:chat_app/app.dart';
 import 'package:chat_app/view/authentication/authentication.dart';
 import 'package:flutter/material.dart';
+
+import '../view/home_page/home_page.dart';
 
 class Navigation extends NavigatorObserver {
   static List<Route<dynamic>> routeStack = <Route<dynamic>>[];
@@ -11,7 +12,7 @@ class Navigation extends NavigatorObserver {
     switch (settings.name) {
       case initalPage:
         return _GenerateRoute(
-          child: const Authentication(),
+          child: const HomePage(),
           routeName: settings.name!,
         );
       default:
