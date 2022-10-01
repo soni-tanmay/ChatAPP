@@ -1,4 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:convert';
+
 import 'package:chat_app/logic/authentication_bloc/authentication_bloc.dart';
 import 'package:chat_app/services/authentication/authentication_repo.dart';
 import 'package:chat_app/services/socket/socket_service.dart';
@@ -125,11 +127,11 @@ class _ChatPageState extends State<ChatPage> {
             onPressed: () {
               SocketService.instance.socket.emit(
                 'sendMessage',
-                {
+                jsonEncode({
                   "message": "Hey This is general channel",
                   "senderId": "04bfadda-2b37-4b40-ba1c-26bfbd181fc9",
                   "channelId": "c05bc5bd-598e-4230-85c3-36b49cc3e1ef"
-                },
+                }),
               );
             },
           ),
