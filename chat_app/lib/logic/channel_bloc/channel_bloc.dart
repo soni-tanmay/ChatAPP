@@ -44,14 +44,15 @@ class ChannelBloc extends Bloc<ChannelEvent, ChannelState> {
     }
   }
 
-  // Future<ChannelState> findTrendingChannel() async {
-  //   try {
-  //     // var response = await AppService.getInstance.authenticationRepo.login();
-  //     // return ChannelSuccessfull();
-  //   } catch (e) {
-  //     return ChannelError();
-  //   }
-  // }
+  Future<ChannelState> findTrendingChannel() async {
+    try {
+      var response =
+          await AppService.getInstance.channelRepository.findTrendingChannel();
+      return ChannelSuccessfull(channelList: response);
+    } catch (e) {
+      return ChannelError();
+    }
+  }
 
   // Future<ChannelState> searchChannel() async {
   //   try {
