@@ -1,34 +1,35 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { ChannelService } from './channel.service';
 import { CreateChannelDto } from './dto/create-channel.dto';
-import { UpdateChannelDto } from './dto/update-channel.dto';
 
 @Controller('channels')
 export class ChannelController {
   constructor(private readonly channelService: ChannelService) {}
 
+  @UseGuards(AuthGuard('jwt-strategy'))
   @Post()
-  create(@Body() createChannelDto: CreateChannelDto) {
-    return this.channelService.create(createChannelDto);
+  create(@Body() createChannelDto: CreateChannelDto, @Request() req) {
+    console.log(req);
+    return this.channelService.create(createChannelDto, req.user.id)
   }
 
+  // @UseGuards(AuthGuard('jwt-strategy'))
   @Get()
-  findAll() {
-    return this.channelService.findAll();
+  findAll(@Request() req) {
+    console.log(req.user.id);
+    return this.channelService.findAll(req.user.id)
   }
 
+  // @UseGuards(AuthGuard('jwt-strategy'))
   @Get('trending')
-  findOne() {
-    return this.channelService.findTrending();
+  findTrending() {
+    return this.channelService.findTrending()
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateChannelDto: UpdateChannelDto) {
-    return this.channelService.update(+id, updateChannelDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.channelService.remove(+id);
+  // @UseGuards(AuthGuard('jwt-strategy'))
+  @Get('trending')
+  search() {
+    return this.channelService.findTrending()
   }
 }

@@ -6,7 +6,7 @@ import { UpdateChannelDto } from './dto/update-channel.dto'
 @Injectable()
 export class ChannelService {
   constructor(private prisma: PrismaService) {}
-  async create(createChannelDto: CreateChannelDto) {
+  async create(createChannelDto: CreateChannelDto, userId: string) {
     const channel = await this.prisma.channels.create({
       data: {
         name: createChannelDto.name,
@@ -41,7 +41,7 @@ export class ChannelService {
     return channel
   }
 
-  async findAll() {
+  async findAll(userId: string) {
     try {
       let channels = await this.prisma.channels.findMany({
         where: {
