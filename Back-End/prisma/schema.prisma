@@ -1,0 +1,82 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  id             String       @default(uuid()) @id
+  userName       String       @unique
+  name           String    
+  email          String       @unique
+  password       String    
+  profilePic     String    
+  createdAt      DateTime     @default(now())
+  updateAt       DateTime     @default(now())
+  workspaces     UsersWorkspaces[]
+  channels       UsersChannels[]
+  messages       Messages[]
+}
+
+model Workspaces {
+id             String          @default(uuid()) @id
+name           String          @unique
+image          String
+Description    String
+users          UsersWorkspaces[]
+createdAt      DateTime     @default(now())
+updateAt       DateTime     @default(now())
+channels       Channels[]
+}
+
+model UsersWorkspaces {
+  user        Users     @relation(fields: [userId], references: [id])
+  userId      String // relation scalar field (used in the `@relation` attribute above)
+  workspace   Workspaces @relation(fields: [workspaceId], references: [id])
+  workspaceId String // relation scalar field (used in the `@relation` attribute above)
+  updatedAt   DateTime @default(now())
+  createdAt   DateTime @default(now())
+  @@id([userId, workspaceId])
+}
+
+model Channels {
+id             String       @default(uuid()) @id
+name           String
+image          String
+createdAt      DateTime     @default(now())
+updateAt       DateTime     @default(now())
+workspace      Workspaces   @relation(fields: [workspaceId], references: [id])
+workspaceId    String
+users          UsersChannels[]
+messages       Messages[]
+}
+
+model UsersChannels {
+  user        Users     @relation(fields: [userId], references: [id])
+  userId      String // relation scalar field (used in the `@relation` attribute above)
+  channel     Channels @relation(fields: [channelId], references: [id])
+  channelId   String // relation scalar field (used in the `@relation` attribute above)
+  updatedAt   DateTime @default(now())
+  createdAt   DateTime @default(now())
+  @@id([userId, channelId])
+}
+
+model Messages {
+id             String       @default(uuid()) @id
+message        String
+image          String
+createdAt      DateTime     @default(now())
+updateAt       DateTime     @default(now())
+user           Users        @relation(fields: [senderId], references: [id])
+senderId       String
+channel        Channels     @relation(fields: [channelId], references: [id])
+channelId      String
+}
+
+
