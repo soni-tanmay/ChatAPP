@@ -89,4 +89,15 @@ export class UsersService {
   findOneByUserName(userName: string) {
     return this.prisma.users.findUnique({ where: { userName } })
   }
+
+  updateOne(id: string, request: UpdateUserDto) {
+    return this.prisma.users.update({
+      where: {
+        id: id,
+      },
+      data: {
+        profilePic: request.image,
+      },
+    })
+  }
 }
