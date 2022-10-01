@@ -7,7 +7,7 @@ import { UpdateChannelDto } from './dto/update-channel.dto'
 export class ChannelService {
   constructor(private prisma: PrismaService) {}
   async create(createChannelDto: CreateChannelDto) {
-    const channel1 = await this.prisma.channels.create({
+    const channel = await this.prisma.channels.create({
       data: {
         name: createChannelDto.name,
         image:
@@ -30,9 +30,7 @@ export class ChannelService {
             {
               user: {
                 connect: {
-                  where: {
-                    id: createChannelDto.userId,
-                  },
+                  id: '04bfadda-2b37-4b40-ba1c-26bfbd181fc9',
                 },
               },
             },
@@ -40,15 +38,40 @@ export class ChannelService {
         },
       },
     })
-    return 'This action adds a new channel'
+    return channel
   }
 
   async findAll() {
-    return await this.prisma.channels.findMany()
+    try {
+      let channels = await this.prisma.channels.findMany({
+        where: {
+          users: {
+            some: {
+              userId: '04bfadda-2b37-4b40-ba1c-26bfbd181fc9',
+            },
+          },
+        },
+      })
+      return { message: 'success', data: channels }
+    } catch (err) {
+      return { message: 'error', data: err }
+    }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} channel`
+  async findTrending() {
+    try {
+      let channels = await this.prisma.channels.findMany({
+        orderBy: {
+          messages: {
+            _count: 'desc',
+          },
+        }
+      });
+
+      return { message: 'success', data: channels }
+    } catch (err) {
+      return { message: 'error', data: err }
+    }
   }
 
   update(id: number, updateChannelDto: UpdateChannelDto) {

@@ -17,9 +17,9 @@ export class ChannelController {
     return this.channelService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.channelService.findOne(+id);
+  @Get('trending')
+  findOne() {
+    return this.channelService.findTrending();
   }
 
   @Patch(':id')
