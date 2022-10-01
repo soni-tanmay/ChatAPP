@@ -28,7 +28,7 @@ export class ChannelController {
   }
 
   // @UseGuards(AuthGuard('jwt-strategy'))
-  @Get('trending')
+  @Get('search')
   search() {
     return this.channelService.findTrending()
   }
