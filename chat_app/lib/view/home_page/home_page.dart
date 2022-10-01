@@ -10,7 +10,8 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        const Expanded(flex: 2, child: ChannelMenu()),
+        if (MediaQuery.of(context).size.width > 1200)
+          const Expanded(flex: 2, child: ChannelMenu()),
         Expanded(flex: 8, child: ChatPage())
       ],
     );

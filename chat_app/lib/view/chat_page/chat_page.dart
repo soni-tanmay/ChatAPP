@@ -2,6 +2,7 @@
 import 'package:chat_app/logic/authentication_bloc/authentication_bloc.dart';
 import 'package:chat_app/services/authentication/authentication_repo.dart';
 import 'package:chat_app/utilities/export.dart';
+import 'package:chat_app/view/channel_menu/channel_menu.dart';
 import 'package:chat_app/view/chat_page/profile_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -48,6 +49,11 @@ class _ChatPageState extends State<ChatPage> {
           const SizedBox(width: 20)
         ],
       ),
+      drawer: (MediaQuery.of(context).size.width < 1200)
+          ? const Drawer(
+              child: ChannelMenu(),
+            )
+          : null,
       body: ListView.builder(
         itemCount: 20,
         reverse: true,
