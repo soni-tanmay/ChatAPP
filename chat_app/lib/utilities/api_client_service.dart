@@ -5,7 +5,7 @@ class ApiClient {
   static final ApiClient _instance = ApiClient._();
   static ApiClient get instance => _instance;
 
-  final String baseUrl = 'http://localhost:3000/api/v1';
+  final String baseUrl = 'http://34.173.173.71/';
 
   late Dio _dio;
   Dio get getClient => _dio;

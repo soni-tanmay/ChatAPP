@@ -13,7 +13,7 @@ Future<void> main() async {
   ApiClient.instance.initialize();
 
   await AppService.getInstance.initialize(
-    channelRepository: ChannelRepository(),
+    channelRepository: ChannelRepository.instance,
     authenticationRepo: AuthenticationRepo.instance,
   );
 

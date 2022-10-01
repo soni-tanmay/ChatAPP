@@ -20,6 +20,7 @@ class AppService {
 
     // Initializing repositories
     _authenticationRepository = authenticationRepo;
+    _channelRepository = channelRepository;
   }
 
   // Defining all the repositories required with in the app.
@@ -28,5 +29,11 @@ class AppService {
   AuthenticationRepo get authenticationRepo {
     if (_authenticationRepository != null) return _authenticationRepository!;
     throw Exception('AuthenticationRepo not initialized');
+  }
+
+  ChannelRepository? _channelRepository;
+  ChannelRepository get channelRepository {
+    if (_channelRepository != null) return _channelRepository!;
+    throw Exception('ChannelRepository not initialized');
   }
 }
