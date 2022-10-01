@@ -26,7 +26,7 @@ export class AuthService {
     if (!existingUser) {
       throw new HttpException('User not found with the given credentials', HttpStatus.NOT_FOUND)
     }
-    const tokens = await this.updateRefreshTokenHash(user)
+    const tokens = await this.updateRefreshTokenHash(existingUser)
     return { existingUser, tokens }
   }
 
@@ -77,7 +77,7 @@ export class AuthService {
   async getTokens(user) {
     const payload = {
       sub: user.id,
-      username: user.username,
+      email: user.email,
     }
     const [accessToken, refreshToken] = await Promise.all<any>([
       this.jwtService.signAsync(payload, {
