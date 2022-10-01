@@ -19,6 +19,7 @@ dependencies:
   logger: ^1.1.0
   connectivity_plus: ^2.3.7
   dio: ^4.0.6
+  lottie: ^1.4.3
 
 dev_dependencies:
   flutter_test:
@@ -28,3 +29,6 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets: 
+  - assets/images/
+  - assets/animations/

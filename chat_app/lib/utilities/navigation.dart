@@ -1,5 +1,5 @@
 import 'package:chat_app/app.dart';
-import 'package:chat_app/view/authentication.dart';
+import 'package:chat_app/view/authentication/authentication.dart';
 import 'package:flutter/material.dart';
 
 class Navigation extends NavigatorObserver {
