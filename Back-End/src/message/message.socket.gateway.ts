@@ -13,7 +13,7 @@ export class MessageSocketGateway {
     console.log(`[ ${socket.id} ] connected`)
     socket.on('sendMessage', async (data: CreateMessageDto) => {
       console.log('sendMessageData', data)
-      // const { password, ...user } = await this.usersService.findOne(data.senderId)
+      const { password, ...user } = await this.usersService.findOne(data.senderId)
       socket.emit(`${data.channelId}`, { message: data })
       await this.messageService.create(data)
     })
