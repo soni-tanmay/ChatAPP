@@ -10,7 +10,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Expanded(flex: 2, child: ChannelMenu()),
+        const Expanded(flex: 2, child: ChannelMenu()),
         Expanded(flex: 8, child: ChatPage())
       ],
     );

@@ -1,4 +1,3 @@
-import 'package:chat_app/utilities/logger.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,7 +24,6 @@ class AuthenticationBloc
     emit(AuthenticationLoading());
 
     emit(AuthenticationSuccessfull());
-
   }
 
   Future<void> signUp(
