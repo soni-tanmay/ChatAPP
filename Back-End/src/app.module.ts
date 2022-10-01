@@ -10,19 +10,19 @@ import { UsersModule } from './users/users.module'
   imports: [PrismaModule, AuthModule, UsersModule, ChannelModule, MessageModule],
   providers: [
     // Validate all incoming request inputs.
-    {
-      provide: APP_PIPE,
-      useValue: new ValidationPipe({
-        whitelist: true,
-        forbidUnknownValues: true,
-        transform: true,
-        transformOptions: {
-          enableImplicitConversion: true,
-        },
-      }),
-    },
+    // {
+    //   provide: APP_PIPE,
+    //   useValue: new ValidationPipe({
+    //     whitelist: true,
+    //     forbidUnknownValues: false,
+    //     transform: true,
+    //     transformOptions: {
+    //       enableImplicitConversion: true,
+    //     },
+    //   }),
+    // },
     // Serialize all outgoing responses, and avoid sending keys marked as excluded.
-    { provide: APP_INTERCEPTOR, useClass: ClassSerializerInterceptor },
+    // { provide: APP_INTERCEPTOR, useClass: ClassSerializerInterceptor },
   ],
 })
 export class AppModule {}
