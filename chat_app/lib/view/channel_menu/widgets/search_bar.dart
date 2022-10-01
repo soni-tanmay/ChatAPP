@@ -11,7 +11,7 @@ class SearchBar extends StatelessWidget {
       onTap: () {},
       borderRadius: BorderRadius.circular(25),
       hoverColor: AppTheme.grey.withOpacity(0.3),
-      focusColor: AppTheme.lightGrey,
+      focusColor: AppTheme.grey.withOpacity(0.1),
       autofocus: true,
       child: Padding(
         padding: const EdgeInsets.all(8.0),

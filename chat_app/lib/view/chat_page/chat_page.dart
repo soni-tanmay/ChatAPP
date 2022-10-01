@@ -14,7 +14,7 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
-  TextEditingController _controller = TextEditingController();
+  final TextEditingController _controller = TextEditingController();
 
   late User user;
 
@@ -48,22 +48,79 @@ class _ChatPageState extends State<ChatPage> {
           const SizedBox(width: 20)
         ],
       ),
-      floatingActionButton: Container(
-        margin: const EdgeInsets.all(24),
+      body: ListView.builder(
+        itemCount: 20,
+        reverse: true,
         padding: const EdgeInsets.all(8),
-        height: MediaQuery.of(context).size.height * 0.1,
-        width: double.infinity,
-        decoration: BoxDecoration(
-          color: AppTheme.lightTheme.colorScheme.primary,
-          borderRadius: BorderRadius.circular(10),
+        itemBuilder: (context, index) => Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              height: 24,
+              width: 24,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: AppTheme.lightTheme.colorScheme.secondary,
+              ),
+              child: Center(
+                child: Text(
+                  'U',
+                  style: TextStyle(
+                    color: AppTheme.lightTheme.colorScheme.primary,
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
+              child: Container(
+                margin: const EdgeInsets.all(8),
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: AppTheme.lightTheme.colorScheme.primary,
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'user',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: AppTheme.lightTheme.colorScheme.secondary,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8),
+                      child: Text(index.toString()),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
-        child: TextField(
-          controller: _controller,
+      ),
+      bottomNavigationBar: TextField(
+        controller: _controller,
+        maxLines: 3,
+        decoration: InputDecoration(
+          filled: true,
+          fillColor: AppTheme.lightTheme.colorScheme.primary,
+          hintText: 'Enter your message here',
+          suffixIcon: IconButton(
+            icon: const Icon(
+              Icons.send,
+              color: AppTheme.grey,
+            ),
+            onPressed: () {},
+          ),
+          suffixIconColor: AppTheme.grey,
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }
-
-
