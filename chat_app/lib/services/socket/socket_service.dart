@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 import '../../utilities/export.dart';
@@ -10,7 +12,7 @@ class SocketService {
    late IO.Socket socket;
   void connect() {
     socket = IO.io(
-      'http://localhost:3000/',
+      'http://15.206.149.143:3000/',
       IO.OptionBuilder()
           .setTransports(<String>['websocket'])
           .setQuery(<String, dynamic>{'token': ''})
@@ -20,10 +22,7 @@ class SocketService {
 
     socket.connect();
     socket.onConnect((_) {
-      Console.log('Socket Connected on URL : http://localhost:3000/');
-      socket.on('c05bc5bd-598e-4230-85c3-36b49cc3e1ef', (data) {
-        Console.log(data);
-      });
+      Console.log('Socket Connected on URL :http://15.206.149.143:3000/');
     });
   }
 

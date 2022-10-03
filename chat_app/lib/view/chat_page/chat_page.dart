@@ -10,8 +10,10 @@ import 'package:chat_app/view/chat_page/profile_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../logic/chat_bloc/chat_bloc.dart';
+
 class ChatPage extends StatefulWidget {
-  ChatPage({super.key});
+  const ChatPage({super.key});
 
   @override
   State<ChatPage> createState() => _ChatPageState();
@@ -57,60 +59,61 @@ class _ChatPageState extends State<ChatPage> {
               child: ChannelMenu(),
             )
           : null,
-      body: ListView.builder(
-        itemCount: 20,
-        reverse: true,
-        padding: const EdgeInsets.all(8),
-        itemBuilder: (context, index) => Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              height: 24,
-              width: 24,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: AppTheme.lightTheme.colorScheme.secondary,
-              ),
-              child: Center(
-                child: Text(
-                  'U',
-                  style: TextStyle(
-                    color: AppTheme.lightTheme.colorScheme.primary,
+      body: BlocBuilder<ChatBloc, ChatState>(
+        builder: (context, state) {
+          if (state is ChatFetched) {
+            return ListView.builder(
+              itemCount: state.chats.length,
+              reverse: true,
+              padding: const EdgeInsets.all(8),
+              itemBuilder: (context, index) => Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CircleAvatar(
+                    backgroundColor: AppTheme.lightTheme.colorScheme.primary,
+                    backgroundImage: NetworkImage(
+                      state.chats[index].user.profilePic,
+                    ),
+                    radius: 16,
                   ),
-                ),
-              ),
-            ),
-            Expanded(
-              child: Container(
-                margin: const EdgeInsets.all(8),
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: AppTheme.lightTheme.colorScheme.primary,
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'user',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: AppTheme.lightTheme.colorScheme.secondary,
+                  Expanded(
+                    child: Container(
+                      margin: const EdgeInsets.all(8),
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: AppTheme.lightTheme.colorScheme.primary,
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            state.chats[index].user.name,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: AppTheme.lightTheme.colorScheme.secondary,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8),
+                            child: Text(state.chats[index].payload.message),
+                          ),
+                        ],
                       ),
                     ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8),
-                      child: Text(index.toString()),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ),
-          ],
-        ),
+            );
+          } else {
+            return const Center(
+              child: Text('Fetching chats....'),
+            );
+          }
+        },
       ),
       bottomNavigationBar: TextField(
         controller: _controller,
@@ -128,11 +131,12 @@ class _ChatPageState extends State<ChatPage> {
               SocketService.instance.socket.emit(
                 'sendMessage',
                 jsonEncode({
-                  "message": "Hey This is general channel",
+                  "message": _controller.text,
                   "senderId": "04bfadda-2b37-4b40-ba1c-26bfbd181fc9",
                   "channelId": "c05bc5bd-598e-4230-85c3-36b49cc3e1ef"
                 }),
               );
+              _controller.clear();
             },
           ),
           suffixIconColor: AppTheme.grey,

@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'channel_bloc.dart';
 
 @immutable
@@ -27,4 +28,9 @@ class SearchChannel extends ChannelEvent {
   SearchChannel({
     required this.name,
   });
+}
+
+class ChangeSelectedChannel extends ChannelEvent {
+  final String? channelId;
+  ChangeSelectedChannel({this.channelId});
 }

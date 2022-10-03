@@ -22,23 +22,26 @@ class ChannelBloc extends Bloc<ChannelEvent, ChannelState> {
       } else if (event is SearchChannel) {
         emit(ChannelLoading());
         // emit(await searchChannel());
+      } else if (event is ChangeSelectedChannel) {
+        emit((state as ChannelSuccessfull).copyWith(
+          selectedChannel: event.channelId,
+        ));
       }
     });
   }
-
-  // Future<ChannelState> createChannel(CreateChannel event) async {
-  //   try {
-  //     // return ChannelSuccessfull();
-  //   } catch (e) {
-  //     return ChannelError();
-  //   }
-  // }
 
   Future<ChannelState> findAllChannel() async {
     try {
       List<ChannelModal> response =
           await AppService.getInstance.channelRepository.findAllChannel();
-      return ChannelSuccessfull(channelList: response);
+
+      return ChannelSuccessfull(
+        channelList: response,
+        selectedChannel: response
+            .where((element) => element.name.toLowerCase() == 'general')
+            .first
+            .id,
+      );
     } catch (e) {
       return ChannelError();
     }
@@ -48,18 +51,15 @@ class ChannelBloc extends Bloc<ChannelEvent, ChannelState> {
     try {
       var response =
           await AppService.getInstance.channelRepository.findTrendingChannel();
-      return ChannelSuccessfull(channelList: response);
+      return ChannelSuccessfull(
+        channelList: response,
+        selectedChannel: response
+            .where((element) => element.name.toLowerCase() == 'general')
+            .first
+            .id,
+      );
     } catch (e) {
       return ChannelError();
     }
   }
-
-  // Future<ChannelState> searchChannel() async {
-  //   try {
-  //     // var response = await AppService.getInstance.authenticationRepo.login();
-  //     // return ChannelSuccessfull();
-  //   } catch (e) {
-  //     return ChannelError();
-  //   }
-  // }
 }
