@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 import 'package:chat_app/logic/authentication_bloc/authentication_bloc.dart';
+import 'package:chat_app/logic/channel_bloc/channel_bloc.dart';
 import 'package:chat_app/services/authentication/authentication_repo.dart';
 import 'package:chat_app/services/socket/socket_service.dart';
 import 'package:chat_app/utilities/export.dart';
@@ -132,8 +133,10 @@ class _ChatPageState extends State<ChatPage> {
                 'sendMessage',
                 jsonEncode({
                   "message": _controller.text,
-                  "senderId": "04bfadda-2b37-4b40-ba1c-26bfbd181fc9",
-                  "channelId": "c05bc5bd-598e-4230-85c3-36b49cc3e1ef"
+                  "senderId": user.id,
+                  "channelId":
+                      (context.read<ChannelBloc>().state as ChannelSuccessfull)
+                          .selectedChannel
                 }),
               );
               _controller.clear();

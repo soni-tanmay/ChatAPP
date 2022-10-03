@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:chat_app/logic/channel_bloc/channel_bloc.dart';
 import 'package:chat_app/services/chat/chat_repo.dart';
 import 'package:chat_app/services/socket/socket_service.dart';
@@ -27,6 +29,11 @@ class _MyChannelsState extends State<MyChannels> {
       listener: (context, state) {
         if (state is ChannelSuccessfull) {
           SocketService.instance.connect();
+          SocketService.instance.socket.emit(
+              'subscribeChannel',
+              jsonEncode({
+                "channelId": state.selectedChannel,
+              }));
           context
               .read<ChatBloc>()
               .add(FetchChat(channelId: state.selectedChannel));

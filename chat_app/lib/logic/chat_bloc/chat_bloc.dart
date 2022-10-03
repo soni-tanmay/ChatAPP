@@ -1,4 +1,3 @@
-import 'package:chat_app/services/authentication/authentication_repo.dart';
 import 'package:chat_app/services/chat/chat_repo.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -15,14 +14,15 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         emit(await fetchChats(event.channelId));
       } else if (event is AddChat) {
         final List<ChatModel> chats = (state as ChatFetched).chats;
-        chats.add(event.chat);
+        chats.insert(0, event.chat);
         emit(ChatInitial());
-        emit(ChatFetched(chats: chats.reversed.toList()));
+        emit(ChatFetched(chats: chats));
       }
     });
   }
 
   Future<ChatState> fetchChats(String channelId) async {
-    return ChatFetched(chats: []);
+    final List<ChatModel> chats = await ChatRepo.instance.fetchChat(channelId);
+    return ChatFetched(chats: chats);
   }
 }
